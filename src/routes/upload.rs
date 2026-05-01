@@ -60,7 +60,9 @@ pub async fn post(req: HttpRequest, mut payload: Multipart) -> Result<HttpRespon
         }
 
         // ? Find the content-type of the data.
-        let mut content_type = tree_magic::from_u8(&buf);
+        let mut content_type = infer::get(&buf)
+            .map(|t| t.mime_type().to_string())
+            .unwrap_or_else(|| "application/octet-stream".to_string());
 
         // Intercept known file extensions with certain content types
         if content_type == "application/zip" && filename.to_lowercase().ends_with(".apk") {

@@ -10,7 +10,6 @@ use util::variables::{CONFIG, HOST, LOCAL_STORAGE_PATH, USE_S3};
 
 #[macro_use]
 extern crate lazy_static;
-extern crate tree_magic;
 
 use actix_cors::Cors;
 use actix_web::{middleware, web, App, HttpServer};
