@@ -282,7 +282,7 @@ pub async fn post(req: HttpRequest, mut payload: Multipart) -> Result<HttpRespon
             let bucket = get_s3_bucket(&tag_id)?;
 
             let (_, code) = bucket
-                .put_object(format!("/{}", file.id), &buf)
+                .put_object(format!("/{}/{}", tag_id, file.id), &buf)
                 .await
                 .map_err(|_| Error::S3Error)?;
 

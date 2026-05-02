@@ -33,11 +33,17 @@ lazy_static! {
     pub static ref USE_CLAMD: bool = env::var("CLAMD_HOST").is_ok();
 }
 
-pub fn get_s3_bucket(bucket: &str) -> Result<s3::Bucket, Error> {
-    let mut final_bucket_path = S3_BUCKET_PREFIX.to_owned();
-    final_bucket_path.push_str(bucket);
+pub fn get_s3_bucket(_tag: &str) -> Result<s3::Bucket, Error> {
+    // When AUTUMN_S3_BUCKET_PREFIX is set, use it as the sole bucket name.
+    // Objects are stored under /{tag}/{id} paths within that single bucket,
+    // creating per-tag subfolders (e.g. one DigitalOcean Space for all tags).
+    let bucket_name = if !S3_BUCKET_PREFIX.is_empty() {
+        S3_BUCKET_PREFIX.clone()
+    } else {
+        _tag.to_owned()
+    };
     s3::Bucket::new_with_path_style(
-        &final_bucket_path,
+        &bucket_name,
         S3_REGION.clone(),
         S3_CREDENTIALS.clone(),
     )

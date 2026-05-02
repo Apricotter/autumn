@@ -63,7 +63,7 @@ pub async fn fetch_file(
     if *USE_S3 {
         let bucket = get_s3_bucket(tag)?;
         let (data, code) = bucket
-            .get_object(format!("/{}", id))
+            .get_object(format!("/{}/{}", tag, id))
             .await
             .map_err(|_| Error::S3Error)?;
 
