@@ -100,6 +100,7 @@ async fn main() -> std::io::Result<()> {
                     .supports_credentials(),
             )
             .wrap(middleware::Logger::default())
+            .route("/admin/files", web::get().to(routes::admin::list_files))
             .route("/{tag:[^/]*}", web::post().to(routes::upload::post))
             .route(
                 "/{tag:[^/]*}/download/{filename:.*}",

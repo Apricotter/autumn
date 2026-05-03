@@ -1,3 +1,4 @@
+pub mod admin;
 pub mod download;
 pub mod index;
 pub mod serve;

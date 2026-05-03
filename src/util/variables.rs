@@ -28,6 +28,10 @@ lazy_static! {
     pub static ref S3_BUCKET_PREFIX: String = env::var("AUTUMN_S3_BUCKET_PREFIX").unwrap_or_else(|_| "".to_string());
     pub static ref S3_CREDENTIALS: Credentials = Credentials::default().unwrap();
 
+    // Admin
+    pub static ref ADMIN_TOKEN: String =
+        env::var("AUTUMN_ADMIN_TOKEN").unwrap_or_default();
+
     // Application Flags
     pub static ref USE_S3: bool = env::var("AUTUMN_S3_REGION").is_ok() && env::var("AUTUMN_S3_ENDPOINT").is_ok();
     pub static ref USE_CLAMD: bool = env::var("CLAMD_HOST").is_ok();
